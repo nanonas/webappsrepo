@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+ img.main1 { margin: -7px -2px 0px 0px; }
+div { width: 300px; height: 400px; }
+header { width: 200px; height: 100px;  background: #CCC;}
+div.l1  { position: absolute; left: 70px; top:270px; }
+div.l2 { position: absolute; left: 415px; top:270px; }
+div.l3 { position: absolute; left: 70px; top:730px; }
+div.l4 { position: absolute; left: 415px; top:730px; }
+div.back { width: 100px; height: 100px; position: absolute; left: 20px; top:1167px; }
+
+div.options { position: absolute; left:-150px; top:-1130px; }
+div.help { position: absolute; left: -410px; top:-1130px; }
+div.middle { position: absolute; left: -280px; top:-1040px; }
+div.last { position: absolute; left: -280px; top:-1125px; }
+</style>
+<title>Whackakiki</title>
+
+<script>
+var db = getSessionStorage(); // || dispError('Session Storage not supported.');
+function getSessionStorage() {
+    try {
+        if( !! window.sessionStorage ) return window.sessionStorage;
+    } catch(e) {
+        return undefined;
+    }
+}
+
+//document.getElementById("buttonactive").currentTime = 3.5;
+function sndplay() {
+	document.getElementById("buttonover").play();
+}
+function bgddayang() {
+	var vdayang = document.getElementById("dayang");
+	vdayang.play();
+  stop = !stop;
+  if (stop){
+	  vdayang.pause(); 
+      vdayang.currentTime =0; 
+      vadayang.volume=.5; //50%
+  }
+}
+
+function gotopage(page) {
+	sndplay();
+    db.setItem("page", page);
+	window.location.href = "objective.html";    
+}
+</script>
+</head>
+<body><img class="main1"   src="images/menu/chooseplace.jpg"  height="1270" width="760" />
+<div class="l1" onclick="{gotopage(1);}"> </div>
+<div class="l2" onclick="{gotopage(2);}"> </div>
+<div class="l3" onclick="{gotopage(3);}" > </div>
+<div class="l4" onclick="{gotopage(4);}" > </div>
+<div class="back" onclick="{window.location.href='maingame.html'; }"></div>
+
+<audio onclick="sndplay()" onmouseover="sndplay()" id="buttonover">
+  <source src="sound/bounce1.mp3" ></source>
+</audio>
+<audio loop="loop"  id="dayang">
+  <source src="sound/dayang.mp3" ></source>
+</audio>
+</body>
+</html>

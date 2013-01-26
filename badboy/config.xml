@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:rim="http://www.blackberry.com/ns/widgets"
+        version="2.2.0.1" id="Whackakiki">  
+    <name>Whackakiki</name>
+    <author>Noel Anonas</author>
+    <description>Whakakiki Game, protect the city from insects, rats, dirts and danger</description>
+    <icon src="images/icon114.png"/>
+    <content src="welcome.html"/>
+    <feature id="blackberry.app.orientation" >
+     <param name="mode" value="portrait"></param>
+    </feature>    
+    <rim:orientation mode="portrait" />
+    <rim:loadingScreen backgroundImage="images/guard1.png"
+        onLocalPageLoad="true"/> 
+ 
+</widget>

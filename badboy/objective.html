@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+ img.welcome { margin: -7px -2px 0px 0px; }
+div1 { width: 200px; height: 80px; border: 1px solid #000; background: #CCC;}
+div1.middle { position: absolute; top: 400px; left:200px; }
+</style>
+<script type="text/javascript">
+var dbsession = getSessionStorage(); // || dispError('Session Storage not supported.');
+var page = 1;
+function getSessionStorage() {
+    try {
+        if( !! window.sessionStorage ) return window.sessionStorage;
+    } catch(e) {
+        return undefined;
+    }
+}
+
+ function redirectpage() {
+	 window.location.href = "game01office.html";
+ }
+ 
+ function showImage1() {
+	  var vimg =   document.getElementById("welcome");
+	     vimg.setAttribute("src", "images/play/objoffice.png");
+ }
+ function gotopage() {
+	 	if (page == 1) {
+			window.location.href = "game01office.html";}
+		if (page == 2) {
+			window.location.href = "game02resto.html";}
+		if (page == 3) {
+			window.location.href = "game03road.html";}
+		if (page == 4) {
+			window.location.href = "game04hospital.html";}	
+ }
+ function initDisp() {
+	  var vimg =   document.getElementById("welcome");
+      page = dbsession.getItem('page') ;
+ 	if (page == null ) return;
+     if (page == 1) {
+	     vimg.setAttribute("src", "images/play/objoffice.png"); 	
+     }
+     if (page == 2) {
+	     vimg.setAttribute("src", "images/playresto/objresto.png"); 	
+     }
+     if (page == 3) {
+	     vimg.setAttribute("src", "images/playroad/objroad.png"); 	
+     }
+     if (page == 4) {
+	     vimg.setAttribute("src", "images/playhospital/objhospital.png"); 	
+     }
+
+ //    dbGo();        	     
+ //    dispResults();
+ }
+
+ window.onload = function() {
+     initDisp();
+ }
+ 
+</script>
+<title>Welcome to Whackakiki</title>
+</head>
+<body bgcolor=#ff0000 onload="initDisp()" >
+
+<img onclick="gotopage()" id="welcome" class="welcome" />
+<div></div>
+</body>
+</html>

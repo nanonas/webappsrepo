@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+ img.main1 { margin: -7px 0px 0px -8px; }
+div { width: 230px; height: 50px; border: 1px solid #000 ; }
+header { width: 200px; height: 100px; border: 1px  solid #000; background: #CCC;}
+div.play { position: absolute; left: 280px; top:840px; }
+div.story { position: absolute; left: 40px; top:980px; }
+div.about { position: absolute; left: 280px; top:980px; }
+div.topscore { position: absolute; left: 520px; top:980px; }
+div.options { position: absolute; left: 150px; top:1130px; }
+div.help { position: absolute; left: 410px; top:1130px; }
+div.middle { position: absolute; left: 280px; top:1040px; }
+div.last { position: absolute; left: 280px; top:1125px; }
+</style>
+<title>Whackakiki2</title>
+
+<script>
+//document.getElementById("buttonactive").currentTime = 3.5;
+function sndplay() {
+	document.getElementById("buttonover").play();
+}
+function bgddayang() {
+	var vdayang = document.getElementById("dayang");
+	vdayang.play();
+  stop = !stop;
+  if (stop){
+	  vdayang.pause(); 
+      vdayang.currentTime =0; 
+      vadayang.volume=.5; //50%
+  }
+}
+
+</script>
+</head>
+<body><img class="main1"   src="images/play/maingame1.jpg" />
+<div class="play" onmouseover=" {sndplay(); }" onclick="{window.location.href = 'game01office.html';}"> </div>
+<div class="story" onclick="{window.location.href = 'game02resto.html';}"> </div>
+<div class="about" onclick="{window.location.href = 'game03road.html';}" > </div>
+<div class="topscore" onclick="{window.location.href = 'topscoreview.html';}" > </div>
+<div class="options" onclick="{window.location.href = 'options.html';}" > </div>
+<div class="help" onmouseover="sndplay()" onclick="bgddayang()" > </div>
+
+<audio onclick="sndplay()" onmouseover="sndplay()" id="buttonover">
+  <source src="sound/bounce1.mp3" ></source>
+</audio>
+<audio loop="loop"  id="dayang">
+  <source src="sound/dayang.mp3" ></source>
+</audio>
+</body>
+</html>

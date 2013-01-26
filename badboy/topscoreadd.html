@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- 
+Session Storage
+-->
+
+<head>
+     <style type="text/css">
+ img.main1 { margin: -7px -2px 0px 0px; }
+div {   width: 300px; height: 100px; border: 0px solid #000 ; }
+header { width: 200px; height: 100px; border: 1px  solid #000; background: #CCC;}
+div.content { position: absolute; left: 150px; top:300px; }
+div.story { position: absolute; left: -40px; top:-980px; }
+div.about { position: absolute; left: -280px; top:-980px; }
+div.topscore { position: absolute; left: 400px; top:1125px; 
+               }
+div.back { position: absolute; left: -270px; top:-1130px; }
+div.help { position: absolute; left: -410px; top:-1130px; }
+div.middle { position: absolute; left: -280px; top:-1040px; }
+div.last { position: absolute; left: -280px; top:-1125px; }
+</style>
+    <script language="javascript" src="js/bwH5LS.js"></script>
+    <script language="javascript">
+        var t = new bwTable();
+        var db = getSessionStorage(); // || dispError('Session Storage not supported.');
+
+        function getSessionStorage() {
+            try {
+                if( !! window.sessionStorage ) return window.sessionStorage;
+            } catch(e) {
+                return undefined;
+            }
+        }
+        
+        function dispResults() {
+            if(errorMessage) {
+                element('results').innerHTML = errorMessage;
+                return;
+            }
+            
+            var t = new bwTable();
+            t.addRow( ['traveler', db.getItem('traveler')] );
+            t.addRow( ['destination', db.getItem('destination')] );
+            t.addRow( ['transportation', db.getItem('transportation')] );
+            element('results').innerHTML = t.getTableHTML();
+        }
+
+        function dbGo() {
+            if(errorMessage) return;
+            var f = element('travelForm');
+            db.setItem('traveler', f.elements['traveler'].value);
+            db.setItem('destination', f.elements['destination'].value);
+            db.setItem('transportation', f.elements['transportation'].value);
+           // dispResults();
+            window.location.href ="topscoresavendisp.html";
+        }
+
+        function dbClear() {
+            if(errorMessage) return;
+            db.clear();
+            dispResults();
+        }
+        
+        function initDisp() {
+            dispResults();
+        }
+
+        window.onload = function() {
+          //  initDisp();
+         // db.clear();
+         var vscore =db.getItem("score");
+         if (vscore == null) return;
+         var pscore = document.getElementById("score");
+            pscore.setAttribute("value", vscore);            
+        }
+    </script>
+</head>
+
+<body background="images/menu/topscore.jpg">
+
+<div id="content" class="content">
+
+    <h1> 
+        Name Entry:
+    </h1>
+    
+    <div id="form">
+        <form id="travelForm">
+            <table class="form">
+                <tr><td class="label"> Player </td><td> <input type="text" name="traveler" /> </td></tr>
+                <tr><td class="label">  </td><td> <input type="hidden"  id="score" name="destination" value=100 /> </td></tr>
+                <tr><td class="label">  </td><td> <input type="hidden" name="transportation" value="place" /> </td></tr>
+                <tr><td colspan="2" class="button">
+                    <input id="formSubmit" type="hidden" value="Clear" onClick="javascript:dbClear()" />
+                    <input id="formSubmit" type="button" style="font-size: x-large;" value="Go" onClick="javascript:dbGo()" />
+                </td></tr>
+            </table>
+        <input id="inputAction" type="hidden" name="action" value="add" />
+        <input id="inputKey" type="hidden" name="key" value="0" />
+        </form>
+    </div>
+    
+    <div id="results">
+    <!-- results show here -->
+    </div>
+    
+</div>
+</body>
+</html>

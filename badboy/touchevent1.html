@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Touch Events</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="canvas" width="400" height="400"></canvas>
+<script>
+window.onload = function () {
+var canvas = document.getElementById('canvas');
+function onTouchEvent (event) {
+console.log(event.type);
+var ct1 =document.getElementById("content");
+var x, y,
+touch_event = event.touches[0]; //first touch
+if (touch_event.pageX || touch_event.pageY) {
+x = touch_event.pageX;
+y = touch_event.pageY;
+}
+if (touch.isPressed) {
+	console.log("x: " + touch.x + ", y: " + touch.y);
+	}
+ct1.innerHTML ='event '+event.type + 'x='+x+' y = '+y;
+}
+canvas.addEventListener('touchstart', onTouchEvent, false);
+canvas.addEventListener('touchend', onTouchEvent, false);
+canvas.addEventListener('touchmove', onTouchEvent, false);
+};
+</script>
+***Touch event
+<div id="content"></div>
+</body>
+</html>

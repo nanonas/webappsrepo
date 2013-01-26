@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta id="viewport" name="viewport"  draggable="false" content="width=device-width, height=device-height, maximum-scale=1, minimum-scale=1 /">
+	<style type="text/css">
+     div.music1 {  position: absolute; left: -400px; top:-400px; }  
+    </style>
+
+	<title> Whackakiki </title>
+	
+	<link href="css/whacka.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="js/whackaroad.js"></script>
+	<script type="text/javascript" src="js/swipemenu.js"></script>
+	<script>
+	 function doButton1(e) {
+			//fTimer1 = setInterval(addFlake, timerNumFlake);		
+			//    timerfall = setInterval(objfall, timerNumFall);
+			//	timeranimate = setInterval(animate, timerNumAnimate);
+					
+		//	openswipe = !openswipe; 
+		 continueplay();
+	 }
+	 function doButSound(e) {
+		//	clearInterval(timerfall);
+		//	clearInterval(timeranimate);
+		//	openswipe = !openswipe; 
+		bgddayang();
+		 continueplay();			
+	 }
+	 function doButton3(e) {
+		//	clearInterval(timerfall);
+		//	clearInterval(timeranimate);
+	 window.location.href ="index.html";
+	 continueplay();
+//	 openswipe = !openswipe; 
+	 
+	 }
+	 function doButCont(e) {
+		 continueplay();		 
+		 }
+
+		 function doButMenu(e) {
+		     window.location.href ="maingame.html";
+//		     window.location.href ="sampledb.html";
+	}
+		 function continueplay() {
+				 timerfall = setInterval(objfall, timerNumFall);
+					timeranimate = setInterval(animate, timerNumAnimate);						
+				//	fTimer1 = setInterval(addFlake, timerNumFlake);		
+
+		 }
+	</script>
+</head>
+
+<body>
+
+
+	<script>
+	
+		window.addEventListener("load", function() {
+			if(swipemenu) {
+				//Optional: override default menu height (default = 70px)
+				swipemenu.setMenuHeight(110);
+				
+				//Required: Add menu buttons (can be text, images, or a mix of both):
+				//	params (title, callback, alignRight, imagePath)
+				swipemenu.addButton("Sound", doButSound,false, "images/button/soundon.png");
+				swipemenu.addButton("Menu", doButMenu, false, "images/char1.png");
+			//	swipemenu.addButton("Guard", doButton1, false, "images/guard1.png");
+			//	swipemenu.addButton("Text Only", doButton, true, "", "customIdStyle");
+				//swipemenu.addButton("URL", doButton, true, "http://icons.iconarchive.com/icons/martin-berube/animal/48/monkey-icon.png");
+				swipemenu.addButton("Resume", doButCont, false,"images/button/Play.png");
+				
+			}
+		}, false);
+	//Audio sound
+	function sndplay() {
+	document.getElementById("buttonover").play();
+}
+function bgddayang() {
+	//var vdayang = document.getElementById("dayang");
+	vdayang.play();
+  stop = !stop;
+  if (stop){
+	  vdayang.pause(); 
+      vdayang.currentTime =0; 
+      vadayang.volume=.5; //50%
+  }
+}
+		
+	</script>
+
+<div id="canvas" ></div>
+	
+</body>
+</html>

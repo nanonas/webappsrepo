@@ -1,0 +1,43 @@
+<html>
+<body>
+<p>
+    <b>blackberry.app</b>
+    <br/>
+    <input type="text" id="textAppName"/>
+    <br>
+    <input type="text" id="textAppVersion"/>
+</p>
+<p>
+    <b>Test invoke with PPS</b>
+    <br/>
+    <input type="button" onclick="window.invoke?window.invoke():
+        alert('WebWorks is not ready yet');" value="Invoke Browser"/>
+    <input type="text" id="textbrowser" value="http://www.rim.com"/>
+</p>
+<script src="js/webworks-1.0.2.9.js"></script>
+<script>
+    function invoke() {
+        blackberry.invoke.invoke({target: "sys.browser", 
+            uri: document.getElementById('textbrowser').value}, 
+            onInvokeSuccess, onInvokeError);
+    }
+    window.addEventListener("load", function(e) {
+        document.addEventListener("webworksready", function(e) {
+           document.getElementById('textAppName').value = blackberry.app.name;
+           document.getElementById('textAppVersion').value = blackberry.app.version;
+           window.invoke = invoke;
+        }, false);
+    }, false);
+    
+    function onInvokeError()
+    {
+        alert("Error");
+    }
+    
+    function onInvokeSuccess()
+    {
+        alert("Success");
+    }
+</script>
+</body>
+</html>

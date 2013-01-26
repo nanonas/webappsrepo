@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+ img.welcome { margin: -8px -2px 0px 0px; }
+div1 { width: 200px; height: 80px; border: 0px solid #000; background: #CCC;}
+div1.middle { position: absolute; top: 400px; left:200px; }
+</style>
+<title>Welcome to Whackakiki</title>
+<script type="text/javascript" src="webworks.js"></script>
+<script type="text/javascript">
+window.addEventListener("load", wready, false);
+
+function start() {
+ var msg =        document.getElementById("msg");
+   msg.innerHTML = "Noel Quizon Anonas";
+   
+}
+function start2() {
+ var input1 =        document.getElementById("input1");
+   input1.value = "Noel Anonas";
+   
+}
+
+function wready () {
+document.addEventListener("webworksready", start);
+//{window.location.href = 'maingame.html';}
+
+}
+
+</script>
+
+</head>
+<body bgcolor=#ff0000 >
+
+<img onclick="{start(); }"  class="welcome" src="images/whwelcome.png" width=30 height=30 />
+msg <div id="msg">helo 123</div>
+
+end
+<input type=text name=input1 id="input1" />
+</body>
+</html>

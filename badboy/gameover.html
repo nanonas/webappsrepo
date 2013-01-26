@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<style type="text/css">
+ img.welcome { margin: -7px -2px 0px 0px; }
+div1 { width: 200px; height: 80px; border: 1px solid #000; background: #CCC;}
+div1.middle { position: absolute; top: 400px; left:200px; }
+</style>
+<script type="text/javascript" src="js/bwH5LS.js"></script>
+<script type="text/javascript">
+var page = 1;
+dbsession = getSessionStorage(); // || dispError('Session Storage not supported.');
+function getSessionStorage() {
+    try {
+        if( !!  window.sessionStorage ) return window.sessionStorage;
+    } catch(e) {
+        return undefined;
+    }
+}
+  page = dbsession.getItem('page') ;
+
+
+ function redirectpage() {
+	 window.location.href = "game01office.html";
+ }
+ 
+ function showImage1() {
+	  var vimg =   document.getElementById("welcome");
+	     vimg.setAttribute("src", "images/play/objoffice.png");
+ }
+ function gotopage() {
+	 	if (page == 1) {
+			window.location.href = "objectiveoffice.html";}
+//		window.location.href = "game01office.html";}
+		if (page == 2) {
+			window.location.href = "game02resto.html";}
+		if (page == 3) {
+			window.location.href = "game03road.html";}
+		if (page == 4) {
+			window.location.href = "game04hospital.html";}	
+ }
+
+ function dosession() {
+	   dbsession = getSessionStorage(); // || dispError('Session Storage not supported.');
+	  function getSessionStorage() {
+	      try {
+	          if( !!  window.sessionStorage ) return window.sessionStorage;
+	      } catch(e) {
+	          return undefined;
+	      }
+	  }
+    //  page = dbsession.getItem('page') ;
+
+
+ }
+ function initDisp() {
+	  var vimg =   document.getElementById("welcome");
+    page=1;
+	  if (page == null ) return;
+     if (page == 1) {
+//	     vimg.setAttribute("src", "images/play/levelclear.jpg"); 	
+	     vimg.setAttribute("src", "images/play/gameover.jpg"); 	
+     }
+     if (page == 2) {
+	     vimg.setAttribute("src", "images/playresto/gameover.jpg"); 	
+     }
+     if (page == 3) {
+	     vimg.setAttribute("src", "images/playroad/gameover.jpg"); 	
+     }
+     if (page == 4) {
+	     vimg.setAttribute("src", "images/playhospital/gameover.jpg"); 	
+     }
+
+ //    dbGo();        	     
+ //    dispResults();
+ }
+
+ window.onload = function() {
+     initDisp();
+ }
+ 
+</script>
+<title>Welcome to Whackakiki</title>
+</head>
+<body bgcolor=#ff0000 >
+
+<img height="470" width="328" onclick="gotopage()" id="welcome" class="welcome" />
+<div></div>
+</body>
+</html>

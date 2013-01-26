@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html>
+
+<!-- 
+   Whackakiki Top Scorer
+-->
+
+<head>
+    <title>
+        Top 10 Scorer
+    </title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+   <style type="text/css">
+     p.message {  position: absolute; left: -400px; top:-400px; }  
+    </style>
+    
+    <script type="text/javascript" src="js/bwH5LS.js" ></script>
+    <script type="text/javascript" >
+    var dbsession = getSessionStorage() || dispError('Session Storage not supported.');
+
+    function getSessionStorage() {
+        try {
+            if( !! window.sessionStorage ) return window.sessionStorage;
+        } catch(e) {
+            return undefined;
+        }
+    }
+    
+    
+        var db = prepareDatabase();
+        var createSQL = 'CREATE TABLE IF NOT EXISTS tblscore (' +
+                'id INTEGER PRIMARY KEY,' +
+                'player TEXT,' +
+                'pscore INTEGER,' +
+                'place TEXT' +
+            ')';
+
+        // Check if this browser supports Web SQL
+        function getOpenDatabase() {
+            try {
+                if( !! window.openDatabase ) return window.openDatabase;
+                else return undefined;
+            } catch(e) {
+                return undefined;
+            }
+        }
+
+        // Open the Web SQL database
+        function prepareDatabase() {
+            var odb = getOpenDatabase();
+            if(!odb) {
+                dispError('DB SQL Not Supported');
+                return undefined;
+            } else {
+                var db = odb( 'testDatabase', '1.0', 'A Test Database', 10 * 1024 * 1024 );
+                db.transaction(function (t) {
+                    t.executeSql( createSQL, [], function(t, r) {}, function(t, e) {
+                        alert('create table: ' + e.message);
+                    });
+                });
+                return db;
+            }
+        }
+
+        // How many rows do we have?
+        function countRows() {
+            if(!db) return;
+            db.readTransaction(function (t) {
+                t.executeSql('SELECT COUNT(*) AS c FROM tblscore', [], function (t, r) {
+                    var c = r.rows.item(0).c;
+                    element('rowCount').innerHTML = c ? c : 0;
+                }, function(t, e) {
+                    alert('countRows: ' + e.message);
+                });
+            });
+        }
+
+        // Create the Edit and Delete buttons for a row
+        function rowButtons( id, player ) {
+        	return '';
+        //    return '<form><input type="button" value="Edit" onClick="javascript:editGo(' + id + ')"/>' +
+        //        '<input type="button" value="Delete" onClick="javascript:deleteGo(' + id + ', &quot;' + player + '&quot;)"/></form>';
+        }
+
+        // Main display function
+        function dispResults() {
+            if(errorMessage) {
+                element('results').innerHTML = errorMessage;
+                return;
+            }
+
+            countRows();    // update the row count each time the display is refreshed
+
+            if(db) {
+                db.readTransaction(function(t) {    // readTransaction sets the database to read-only
+                    t.executeSql('SELECT  * FROM tblscore ORDER BY pscore desc', [], function(t, r) {
+                        var bwt = new bwTable(); 
+                        bwt.setHeader(['Player', 'Score']);
+//                        bwt.setHeader(['Player', 'Score', 'Place']);
+//                        bwt.setHeader(['Player', 'Score', 'Place', '']);
+//                        for( var i = 0; i < r.rows.length; i++ ) {
+                          vlength = r.rows.length;
+                          if (vlength > 9) vlength=9;
+	for( var i = 0; i < vlength; i++ ) {
+                            var row = r.rows.item(i);
+                            bwt.addRow([row.player, row.pscore]);
+//                            bwt.addRow([row.player, row.pscore, row.place]);
+                         //   bwt.addRow([row.player, row.pscore, row.place, rowButtons(row.id, row.player)]);
+                        }
+                        element('results').innerHTML = bwt.getTableHTML();
+                        element('travelForm').elements['player'].focus();
+                    });
+                });
+            }
+        }
+
+        // add or update rows in the table
+        function dbGo() {
+            if(errorMessage) return;
+            var f = element('travelForm');
+            var action = f.elements['inputAction'].value;
+            var player = f.elements['player'].value;
+            var pscore = f.elements['pscore'].value;
+            var place = f.elements['place'].value;
+            var key = f.elements['key'].value;
+
+            switch(action) {
+            case 'add': 
+                if(! (player || pscore || place)) break;
+                db.transaction( function(t) {
+                    t.executeSql(' INSERT INTO tblscore ( player, pscore, place ) VALUES ( ?, ?, ? ) ',
+                        [ player, pscore, place ]
+                    );
+                }, function(t, e){ alert('Insert row: ' + e.message); }, function() {
+                    resetblscoreForm();
+                });
+                break;
+            case 'update':
+                if(! (player || pscore || place)) break;
+                db.transaction( function(t) {
+                    t.executeSql(' UPDATE tblscore SET player = ?, pscore = ?, place = ? WHERE id = ?',
+                        [ player, pscore, place, key ]
+                    );
+                }, function(t, e){ alert('Update row: ' + e.message); }, function() {
+                    resetblscoreForm();
+                });
+                break;
+            }
+            dispResults();
+        }
+
+        // update the edited row
+        function editGo(id) {
+            db.readTransaction(function(t) {
+                t.executeSql('SELECT * FROM tblscore WHERE id = ?', [id], function(t, r) {
+                    var row = r.rows.item(0);
+                    if(row) {
+                        var f = element('travelForm');
+                        f.elements['player'].value = row.player;
+                        f.elements['pscore'].value = row.pscore;
+                        f.elements['place'].value = row.place;
+                        f.elements['goButton'].value = 'Update';
+                        f.elements['inputAction'].value = 'update';
+                        f.elements['key'].value = row.id;
+                        f.elements['player'].focus();
+                        f.elements['player'].select();
+                    }
+                });
+            });
+        }
+
+        // confirm and delete a row
+        function deleteGo(id, player) {
+            if(confirm('Delete ' + player + ' (ID: ' + id + ')?')) {
+                db.transaction(function(t) {
+                    t.executeSql('DELETE FROM tblscore WHERE id = ?', [id]);
+                });
+                resetblscoreForm();
+                dispResults();
+            }
+        }
+
+        // clear all the form fields and reset the button and action elements
+        function resetblscoreForm() {
+            var f = element('travelForm');
+            for( var n in [ 'player', 'pscore', 'place', 'key' ] ) {
+                f.elements[n].value = '';
+            }
+            f.elements['inputAction'].value = 'add';
+            f.elements['goButton'].value = 'Add';
+        }
+
+        // delete all the rows in the table
+        function clearDB() {
+            if(confirm('Clear the entire table?')) {
+                db.transaction(function(t) {
+                    t.executeSql('DELETE FROM tblscore');
+                });
+                dispResults();
+            }
+        }
+
+        function initDisp() {
+        	document.getElementById("player").value = dbsession.getItem('traveler') ;
+        	document.getElementById("pscore").value = dbsession.getItem('destination') ;
+            dbGo();        	     
+            dispResults();
+        }
+
+        window.onload = function() {
+            initDisp();
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="content">
+
+    <h1> 
+        Top 10 Scorer
+    </h1>
+    
+    <div id="form">
+        <form id="travelForm">
+            <table class="form">
+         <!-- Player -->       <tr><td class="label"> </td><td> <input type="hidden" id="player" name="player"  /> </td></tr>
+         <!-- Score -->        <tr><td class="label"> </td><td> <input type="hidden" id="pscore" name="pscore" /> </td></tr>
+                <tr><td class="label">  </td><td> <input type="hidden" name="place" value="unknown" /> </td></tr>
+                <tr><td colspan="2" class="button">
+                    <!--  input id="formSubmit" type="button" name="goButton" value="Process" onClick="javascript:dbGo()" />  -->
+                </td></tr>
+            </table>
+        <input id="inputAction" type="hidden" name="action" value="add" />
+        <input id="inputKey" type="hidden" name="key" value="0" />
+        </form>
+    </div>
+    
+    <p id="rcp" class="message">
+        There are <span id="rowCount">_</span> rows in the table.
+        <input type="button" value="Empty" onClick="javascript:clearDB()" />
+    </p>
+
+    <div id="results">
+    <!-- results show here -->
+    </div>
+    
+</div>
+</body>
+</html>

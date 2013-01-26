@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta id="viewport" name="viewport"  draggable="false" content="width=device-width, height=device-height, maximum-scale=1, minimum-scale=1 /">
+	
+	<title> Whack-A-Kiki </title>
+	
+	<link href="css/whacka.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="js/whacka.js"></script>
+	<script type="text/javascript" src="js/swipemenu.js"></script>
+	<script>
+	 function doButton1(e) {
+			//fTimer1 = setInterval(addFlake, timerNumFlake);		
+			    timerfall = setInterval(objfall, timerNumFall);
+				timeranimate = setInterval(animate, timerNumAnimate);
+					
+			openswipe = !openswipe; 
+				
+	 }
+	 function doButton2(e) {
+			clearInterval(timerfall);
+			clearInterval(timeranimate);
+			openswipe = !openswipe; 
+				
+	 }
+	 function doButton3(e) {
+		//	clearInterval(timerfall);
+		//	clearInterval(timeranimate);
+	 window.location.href ="index.html";
+	 openswipe = !openswipe; 
+	 
+	 }
+
+		 function doButton(e) {
+			//alert("You clicked it!");
+			var x = document.getElementById('s1');
+			x.innerHTML = "Noelx"+e.x;
+		    // x.innerHTML = "noel:"+swipemenu.existingButtons[1].innerText+"*";
+
+		     window.location.href ="sampledb.html";
+			//if (menu1 == 2) window.location.href ="sampledb.html";
+//var evt=window.event || e;
+// if (!evt.target) //if event obj doesn't support e.target, presume it does e.srcElement
+ // evt.target=evt.srcElement;
+     
+		//swipemenu.close;
+		// hideMenuBar;
+	}
+	</script>
+</head>
+
+<body>
+	<div id="canvas" ></div>
+		<img class="main1"   src="images/play/mainmenu.png" />
+	
+	<script>
+	
+		window.addEventListener("load", function() {
+			if(swipemenu) {
+				//Optional: override default menu height (default = 70px)
+				swipemenu.setMenuHeight(100);
+				
+				//Required: Add menu buttons (can be text, images, or a mix of both):
+				//	params (title, callback, alignRight, imagePath)
+				swipemenu.addButton("Char", doButton, false, "images/char1.png");
+				swipemenu.addButton("Label", doButton2, false, "images/icon.png");
+				swipemenu.addButton("Guard", doButton1, false, "images/guard1.png");
+			//	swipemenu.addButton("Text Only", doButton, true, "", "customIdStyle");
+				//swipemenu.addButton("URL", doButton, true, "http://icons.iconarchive.com/icons/martin-berube/animal/48/monkey-icon.png");
+				swipemenu.addButton("[x]", swipemenu.close, false);
+				
+				/*
+				icon_options.png, icon_reset.png and icon_rules.png (Public Domain) courtesy of Rory Craig-Barnes
+				https://github.com/glasspear/WebWorks-CodeSamples
+				
+				monkey-icon.png (Freeware, allowed commercial usage) courtesy of Martin Berube:
+				http://www.iconarchive.com/show/animal-icons-by-martin-berube/monkey-icon.html
+				*/
+			}
+		}, false);
+	</script>
+	<a href="sampledb.html">sample db</a><br>
+	<a href="02-done.html">sqlite db</a>
+	<div id=s1></div>
+</body>
+</html>

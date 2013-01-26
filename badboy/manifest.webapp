@@ -1,0 +1,15 @@
+{
+  "name": "Bad Boy 1",
+  "description": "Arcade game",
+  "launch_path": "http://localhost:8080/Whackakikifoxfinal/objectiveoffice.html",
+  "icons": {
+    "128": "/images/char1.png"
+  }, 
+  "developer": {
+    "name": "Asia Pacific College",
+    "url": "http://localhost:8080/Whackakikifoxfinal/objectiveoffice.html"
+  },
+  "default_locale": "en"
+}
+
+

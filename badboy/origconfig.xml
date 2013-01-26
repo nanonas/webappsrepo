@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns="http://www.w3.org/ns/widgets"
+        xmlns:rim="http://www.blackberry.com/ns/widgets"
+        version="1.0.0.0" id="Whackakiki">  
+    <name>Whackakiki</name>
+    <author>APC</author>
+    <description>Whakakiki Game</description>
+    <icon src="images/icon.png"/>
+    <content src="index.html"/>
+    <feature id="blackberry.app.event" required="true" version="1.0.0.0"/>
+    <rim:orientation mode="portrait" />
+    <rim:loadingScreen backgroundImage="images/guard1.png"
+        onLocalPageLoad="true"/> 
+ 
+    
+    <rim:permissions>  
+        <rim:permit>read_geolocation</rim:permit>
+    </rim:permissions>    
+</widget>
